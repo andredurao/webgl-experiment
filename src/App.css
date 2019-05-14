@@ -1,0 +1,6 @@
+.App {
+  display: flex;
+  height: 600px;
+  /* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+  /* background: lightgreen; */
+}
