@@ -8,7 +8,7 @@ class Oscilloscope extends React.Component {
   }
 
   componentDidMount() {
-    this.uniforms = { time: { value: 0.0 } };
+    this.uniforms = { tick: { value: 0 } };
     const width = this.mount.clientWidth;
     const height = this.mount.clientHeight;
     //ADD SCENE
@@ -28,7 +28,6 @@ class Oscilloscope extends React.Component {
     for (let i = -100; i < 100; i++) {
       this.geometry.vertices.push(new THREE.Vector3(i, 0, 0));
     }
-    console.log(this.uniforms);
 
     this.shaderMaterial = new THREE.ShaderMaterial({
       uniforms: this.uniforms,
@@ -60,21 +59,22 @@ class Oscilloscope extends React.Component {
   renderScene = () => {
     // TODO: use only integers here, let the shader do the FP math
     this.tick = (this.tick + 1) % 1000;
-    this.shaderMaterial.uniforms.time.value = (this.tick / 10000.0);
-    // this.shaderMaterial.needsUpdate = true;
-    // this.geometry.elementsNeedUpdate = true;
+    this.shaderMaterial.uniforms.tick.value = this.tick;
     this.renderer.render(this.scene, this.camera);
   }
   vertexShader = () => {
     return(`
-    uniform float time;
+    uniform int tick;
 
     void main(){
       gl_PointSize = 5.0;
       float amplitude = 30.0;
-      float newY = sin(time * position.x) * amplitude;
+      float prop = ((position.x + 100.0) / 200.0) + (float(tick) / 1000.0);
+      float rad = radians(prop * 360.0);
+      float frequency = 5.0;
+      float newY = sin(rad * frequency) * amplitude;
 
-      gl_Position = vec4(position.x, newY, position.z, 75.0);
+      gl_Position = vec4(position.x, newY, 1.0, 75.0);
     }
     `);
   }
