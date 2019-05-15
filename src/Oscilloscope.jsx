@@ -8,7 +8,7 @@ class Oscilloscope extends React.Component {
   }
 
   componentDidMount() {
-    this.uniforms = { tick: { value: 0 } };
+    this.uniforms = { tick: { value: 0 }, terms: { value: [5,1,2,3,4,5,6,7] } };
     const width = this.mount.clientWidth;
     const height = this.mount.clientHeight;
     //ADD SCENE
@@ -57,7 +57,6 @@ class Oscilloscope extends React.Component {
     this.frameId = window.requestAnimationFrame(this.animate);
   }
   renderScene = () => {
-    // TODO: use only integers here, let the shader do the FP math
     this.tick = (this.tick + 1) % 1000;
     this.shaderMaterial.uniforms.tick.value = this.tick;
     this.renderer.render(this.scene, this.camera);
@@ -65,13 +64,14 @@ class Oscilloscope extends React.Component {
   vertexShader = () => {
     return(`
     uniform int tick;
+    uniform int terms[8];
 
     void main(){
       gl_PointSize = 5.0;
       float amplitude = 30.0;
       float prop = ((position.x + 100.0) / 200.0) + (float(tick) / 1000.0);
       float rad = radians(prop * 360.0);
-      float frequency = 5.0;
+      float frequency = float(terms[0]);
       float newY = sin(rad * frequency) * amplitude;
 
       gl_Position = vec4(position.x, newY, 1.0, 75.0);
