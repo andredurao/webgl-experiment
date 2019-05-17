@@ -1,5 +1,6 @@
 import React from 'react';
 import './Knob.css';
+import Slider from '@material-ui/lab/Slider';
 
 class Knob extends React.Component {
   constructor(props) {
@@ -8,8 +9,7 @@ class Knob extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  async handleChange(event) {
-    const value = event.target.value;
+  async handleChange(event, value) {
     await this.setState({value: value});
     this.props.onValueChange(value, this.props.id);
   }
@@ -17,7 +17,7 @@ class Knob extends React.Component {
   render() {
     return (
       <div className="Knob">
-        <input type="text" value={this.state.value} onChange={this.handleChange} />
+        <Slider value={this.state.value} onChange={this.handleChange} vertical />
       </div>
     );
   }

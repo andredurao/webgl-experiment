@@ -1,3 +1,6 @@
 .Knob {
-  padding: 10px;
+  padding: 100px 30px;
+  display: inline-flex;
+  height: 300px;
+  width: 0px;
 }

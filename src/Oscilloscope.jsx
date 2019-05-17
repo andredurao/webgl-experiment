@@ -69,7 +69,7 @@ class Oscilloscope extends React.Component {
   }
   renderScene = () => {
     this.tick = (this.tick + 1) % 1000;
-    // this.shaderMaterial.uniforms.tick.value = this.tick;
+    this.shaderMaterial.uniforms.tick.value = this.tick;
     this.shaderMaterial.uniforms.terms.value = this.compactTerms();
     this.renderer.render(this.scene, this.camera);
   }
