@@ -85,16 +85,16 @@ class Oscilloscope extends React.Component {
       float rad = radians(prop * 360.0);
       float frequency = float(terms[0]);
       float newY = sin(rad * frequency) * amplitude;
-
+      gl_PointSize = 1.8;
       gl_Position = vec4(position.x, newY, 1.0, 75.0);
     }
     `);
   }
   fragmentShader = () => {
-    return(`uniform float time;
+    return(`uniform int tick;
 
     void main(){
-      gl_FragColor = vec4(1.0,(time * 2.0),0.3,1.0);
+      gl_FragColor = vec4(0.0,1.0,0.1,1.0);
     }`);
   }
   render() {
