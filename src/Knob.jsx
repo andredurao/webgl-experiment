@@ -8,9 +8,9 @@ class Knob extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
+  async handleChange(event) {
     const value = event.target.value;
-    this.setState({value: value});
+    await this.setState({value: value});
     this.props.onValueChange(value, this.props.id);
   }
 

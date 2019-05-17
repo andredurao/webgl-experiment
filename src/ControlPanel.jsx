@@ -5,23 +5,13 @@ import Knob from './Knob';
 class ControlPanel extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      samples: {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-      }
-    }
+    this.state = { samples: props.samples };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(value, key) {
-    this.setState((prevState) => ({ samples: { ...this.state.samples, [key]: value} }))
+    this.setState((prevState) => ({ samples: { ...this.state.samples, [key]: value} }));
+    this.props.onValueChange(this.state.samples);
   }
 
   render() {

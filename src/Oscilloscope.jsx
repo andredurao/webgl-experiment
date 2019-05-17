@@ -1,14 +1,19 @@
 import React from 'react';
 import './Oscilloscope.css';
 import * as THREE from 'three';
+
 class Oscilloscope extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { };
+    this.state = { samples: props.samples };
+  }
+
+  compactTerms() {
+    return Object.values(this.state.samples).map((x) => (parseInt(x) || 0));
   }
 
   componentDidMount() {
-    this.uniforms = { tick: { value: 0 }, terms: { value: [5,1,2,3,4,5,6,7] } };
+    this.uniforms = { tick: { value: 0 }, terms: { value: this.compactTerms() } };
     const width = this.mount.clientWidth;
     const height = this.mount.clientHeight;
     //ADD SCENE
@@ -44,6 +49,12 @@ class Oscilloscope extends React.Component {
     this.stop();
     this.mount.removeChild(this.renderer.domElement);
   }
+
+  async componentDidUpdate(previousProps) {
+    if(previousProps.samples !== this.props.samples) {
+      await this.setState((prevState) => ({ samples: this.props.samples }));
+    };
+  }
   start = () => {
     if (!this.frameId) {
       this.frameId = requestAnimationFrame(this.animate);
@@ -58,7 +69,8 @@ class Oscilloscope extends React.Component {
   }
   renderScene = () => {
     this.tick = (this.tick + 1) % 1000;
-    this.shaderMaterial.uniforms.tick.value = this.tick;
+    // this.shaderMaterial.uniforms.tick.value = this.tick;
+    this.shaderMaterial.uniforms.terms.value = this.compactTerms();
     this.renderer.render(this.scene, this.camera);
   }
   vertexShader = () => {
