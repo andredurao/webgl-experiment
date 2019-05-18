@@ -9,9 +9,13 @@ class ControlPanel extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(value, key) {
-    this.setState((prevState) => ({ samples: { ...this.state.samples, [key]: value} }));
-    this.props.onValueChange(this.state.samples);
+  async handleChange(value, key) {
+    if (this.state.samples[key] !== value){
+      await this.setState((prevState) => (
+        { samples: { ...this.state.samples, [key]: value} }
+      ));
+      this.props.onValueChange(this.state.samples);
+    }
   }
 
   render() {

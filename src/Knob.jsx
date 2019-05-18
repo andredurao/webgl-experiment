@@ -1,25 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Knob.css';
 
-class Knob extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { value: props.value }
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  async handleChange(event) {
-    const value = event.target.value;
-    await this.setState({value: value});
-    this.props.onValueChange(value, this.props.id);
-  }
-
-  render() {
-    return (
-      <div className="Knob">
-        <input type="text" value={this.state.value} onChange={this.handleChange} />
-      </div>
-    );
-  }
+const Knob = (props) => {
+  const [value, setValue] = useState(props.value);
+  useEffect(() => {
+    props.onValueChange(value, props.id);
+  });
+  return (
+    <div className="Knob">
+      <input type="text" value={value} onChange={(ev) => setValue(ev.target.value)} />
+    </div>
+  );
 }
+
 export default Knob;
