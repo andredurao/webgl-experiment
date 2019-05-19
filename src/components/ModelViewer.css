@@ -1,0 +1,11 @@
+.ModelViewer {
+    border: 2px solid blue;
+    margin: auto;
+    width: 40%;
+    height: 90%;
+    background: lightblue;
+  }
+/* .ModelViewer canvas {
+  width: 100%;
+  height: 100%;
+} */
