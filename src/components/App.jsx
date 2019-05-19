@@ -21,7 +21,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <ControlPanel samples={this.state.samples} onValueChange={this.handleChange} />
-        <Oscilloscope samples={this.state.samples} />
+        <Oscilloscope samples={this.state.samples} onValueChange={this.handleChange} />
       </div>
     );
   }
