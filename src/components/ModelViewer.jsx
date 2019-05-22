@@ -30,38 +30,19 @@ class ModelViewer extends React.Component {
 
   initLights() {
     let lights = [
-      new THREE.PointLight( 0xffffff, 1, 0 ),
-      new THREE.PointLight( 0xffffff, 1, 0 ),
-      new THREE.PointLight( 0xffffff, 1, 0 ),
+      new THREE.PointLight(0xffffff, 1, 0),
+      new THREE.PointLight(0xffffff, 1, 0),
+      new THREE.PointLight(0xffffff, 1, 0),
     ];
-    lights[ 0 ].position.set( 0, 200, 0 );
-    lights[ 1 ].position.set( 100, 200, 100 );
-    lights[ 2 ].position.set( - 100, - 200, - 100 );
-    this.scene.add( lights[ 0 ] );
-    this.scene.add( lights[ 1 ] );
-    this.scene.add( lights[ 2 ] );
+    lights[0].position.set(0, 200, 0);
+    lights[1].position.set(100, 200, 100);
+    lights[2].position.set(-100, -200, -100);
+    this.scene.add(lights[0]);
+    this.scene.add(lights[1]);
+    this.scene.add(lights[2]);
   }
 
-  initCube(){
-    const length = 12, width = 8;
-
-    const shape = new THREE.Shape();
-    shape.moveTo( 0,0 );
-    shape.lineTo( 0, width );
-    shape.lineTo( length, width );
-    shape.lineTo( length, 0 );
-    shape.lineTo( 0, 0 );
-
-    const extrudeSettings = {
-      steps: 2,
-      depth: 1,
-      bevelEnabled: true,
-      bevelThickness: 1,
-      bevelSize: 1,
-      bevelOffset: 0,
-      bevelSegments: 16,
-    };
-
+  initCube() {
     const materialSettings = {
       color: 0x156289,
       emissive: 0x072534,
@@ -69,10 +50,10 @@ class ModelViewer extends React.Component {
       flatShading: true,
     }
 
-    const geometry = new THREE.ExtrudeBufferGeometry( shape, extrudeSettings );
+    const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
     const material = new THREE.MeshPhongMaterial(materialSettings);
-    const mesh = new THREE.Mesh( geometry, material ) ;
-    this.scene.add( mesh );
+    const mesh = new THREE.Mesh(geometry, material);
+    this.scene.add(mesh);
   }
 
   renderScene(d) {
