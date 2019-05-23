@@ -1,0 +1,18 @@
+.ImageDropZone {
+  border: 2px dashed blue;
+  margin: auto;
+  width: 40%;
+  height: 90%;
+}
+#dropzone-form {
+  margin: 0;
+  padding: 20px;
+  height: 100%;
+  background: lightblue;
+}
+#dropzone-form p{
+  margin: 0;
+}
+#file-input {
+  display: none;
+}
