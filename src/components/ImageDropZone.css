@@ -6,13 +6,29 @@
 }
 #dropzone-form {
   margin: 0;
-  padding: 20px;
   height: 100%;
+}
+#dropzone-form.highlight {
   background: lightblue;
 }
 #dropzone-form p{
   margin: 0;
 }
 #file-input {
+  display: none;
+}
+.canvas{
+  height: 0;
+  width: 0;
+}
+
+.canvas.active{
+  height: 100px;
+  width: 100px;
+}
+
+.img-loader {
+  height: 0;
+  width: 0;
   display: none;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import ControlPanel from './ControlPanel';
 import Oscilloscope from './Oscilloscope';
+import ImageDropZone from './ImageDropZone';
 
 import './App.css';
 
@@ -20,8 +21,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <ControlPanel samples={this.state.samples} onValueChange={this.handleChange} />
-        <Oscilloscope samples={this.state.samples} onValueChange={this.handleChange} />
+        <ImageDropZone />
       </div>
     );
   }
