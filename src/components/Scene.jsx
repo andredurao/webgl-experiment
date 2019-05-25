@@ -24,8 +24,6 @@ class Scene extends React.Component {
 
     this.initLights();
 
-    this.drawMeshes();
-
     this.renderScene();
   }
 
@@ -43,18 +41,27 @@ class Scene extends React.Component {
     this.scene.add(lights[2]);
   }
 
-  drawMeshes() {
-    const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
-    const materialSettings = {
-      color: 0x156289,
-      emissive: 0x072534,
-      side: THREE.DoubleSide,
-      flatShading: true,
-    }
-    const material = new THREE.MeshPhongMaterial(materialSettings);
+  drawCubes() {
+    const canvas = this.canvas.current;
+    const context = canvas.getContext("2d");
 
-    for (let i = -9; i < 10; i++) {
-      for (let j = -9; j < 10; j++) {
+    const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
+
+    for (let i = 0; i < canvas.width; i++) {
+      for (let j = 0; j < canvas.height; j++) {
+        const pixelData = context.getImageData(i,j,1,1).data;
+        const color = new THREE.Color(
+          pixelData[0] / 255.0,
+          pixelData[1] / 255.0,
+          pixelData[2] / 255.0
+        )
+        const materialSettings = {
+          color: color,
+          emissive: 0x072534,
+          side: THREE.DoubleSide,
+          flatShading: true,
+        }
+        const material = new THREE.MeshPhongMaterial(materialSettings);
         const mesh = new THREE.Mesh(geometry, material);
         mesh.position.x = i * 2;
         mesh.position.y = j * 2;
@@ -112,7 +119,10 @@ class Scene extends React.Component {
     let canvas = this.canvas.current;
     let context = canvas.getContext("2d");
     canvas.className = "canvas active";
+    canvas.width = img.width;
+    canvas.height = img.height;
     context.drawImage(img, 0, 0);
+    this.drawCubes();
   }
 
   render() {

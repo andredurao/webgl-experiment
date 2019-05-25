@@ -28,7 +28,11 @@
 #file-input {
   display: none;
 }
-.canvas{
+.Scene .canvas{
   height: 0;
   width: 0;
+}
+.Scene .canvas.active{
+  min-width: 32px;
+  min-height: 32px;
 }
