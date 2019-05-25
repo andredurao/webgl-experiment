@@ -18,7 +18,6 @@ class ImageDropZone extends React.Component {
     this.loadImage(event);
   }
 
-
   highlightClassNames(event) {
     let formClassName = '';
     switch (event.type) {
