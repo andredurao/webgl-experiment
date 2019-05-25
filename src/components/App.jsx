@@ -1,7 +1,8 @@
 import React from 'react';
-import ControlPanel from './ControlPanel';
-import Oscilloscope from './Oscilloscope';
+// import ControlPanel from './ControlPanel';
+// import Oscilloscope from './Oscilloscope';
 import ImageDropZone from './ImageDropZone';
+import Scene from './Scene';
 
 import './App.css';
 
@@ -22,6 +23,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <ImageDropZone />
+        <Scene />
       </div>
     );
   }
