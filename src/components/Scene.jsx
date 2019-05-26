@@ -9,6 +9,7 @@ class Scene extends React.Component {
     this.renderScene = this.renderScene.bind(this);
     this.canvas = React.createRef();
     this.image = React.createRef();
+    this.tick = 0;
   }
 
   componentDidMount() {
@@ -41,6 +42,24 @@ class Scene extends React.Component {
     this.scene.add(lights[2]);
   }
 
+  getMaterialSettings(pixelData) {
+    const color = new THREE.Color(
+      pixelData[0] / 255.0,
+      pixelData[1] / 255.0,
+      pixelData[2] / 255.0
+    );
+    return {
+      color: color,
+      emissive: 0x072534,
+      side: THREE.DoubleSide,
+      flatShading: true,
+    };
+  }
+
+  realignCamera() {
+    this.camera.position.set(0,-100,0);
+  }
+
   drawCubes() {
     const canvas = this.canvas.current;
     const context = canvas.getContext("2d");
@@ -49,17 +68,7 @@ class Scene extends React.Component {
     for (let i = 0; i < canvas.width; i++) {
       for (let j = 0; j < canvas.height; j++) {
         const pixelData = context.getImageData(i,j,1,1).data;
-        const color = new THREE.Color(
-          pixelData[0] / 255.0,
-          pixelData[1] / 255.0,
-          pixelData[2] / 255.0
-        )
-        const materialSettings = {
-          color: color,
-          emissive: 0x072534,
-          side: THREE.DoubleSide,
-          flatShading: true,
-        }
+        const materialSettings = this.getMaterialSettings(pixelData);
         const material = new THREE.MeshPhongMaterial(materialSettings);
         const mesh = new THREE.Mesh(geometry, material);
         mesh.position.x = (i - center.width) * 2;
@@ -67,6 +76,7 @@ class Scene extends React.Component {
         this.scene.add(mesh);
       }
     }
+    this.realignCamera();
   }
 
   componentWillUnmount() {
@@ -78,6 +88,7 @@ class Scene extends React.Component {
     requestAnimationFrame(this.renderScene);
     this.renderer.render(this.scene, this.camera);
     this.controls.update();
+    this.tick = (this.tick + 1) % 1000;
   }
 
   handleDragEvent(event) {
