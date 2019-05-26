@@ -44,9 +44,8 @@ class Scene extends React.Component {
   drawCubes() {
     const canvas = this.canvas.current;
     const context = canvas.getContext("2d");
-
+    const center = { width: (canvas.width / 2), height: (canvas.height / 2)};
     const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
-
     for (let i = 0; i < canvas.width; i++) {
       for (let j = 0; j < canvas.height; j++) {
         const pixelData = context.getImageData(i,j,1,1).data;
@@ -63,8 +62,8 @@ class Scene extends React.Component {
         }
         const material = new THREE.MeshPhongMaterial(materialSettings);
         const mesh = new THREE.Mesh(geometry, material);
-        mesh.position.x = i * 2;
-        mesh.position.y = j * 2;
+        mesh.position.x = (i - center.width) * 2;
+        mesh.position.y = (j - center.height) * -2;
         this.scene.add(mesh);
       }
     }
